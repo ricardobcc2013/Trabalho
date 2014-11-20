@@ -54,9 +54,9 @@ public class Quick_Sort_Externo {
         Collections.sort(area);
     }
 
-    public String ToString2(int LimSup, int LimInf, int Ei, int Es, int Ls, int Li, List<Integer> area) {
+    public String ToString2(int LimSup, int LimInf, int Ei, int Es, int Ls, int Li, List<Integer> area, int i, int j) {
         String result = "";
-        for (int k = 0; k < arquivo.size(); k++) {           
+        for (int k = 0; k < arquivo.size(); k++) {
             result = result + " " + arquivo.get(k);
         }
         result = result + "%";
@@ -78,7 +78,7 @@ public class Quick_Sort_Externo {
         Ls = Es = dir;
         i = esq - 1;
         j = dir + 1;
-        retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area);
+        retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area, i, j);
         saida.add(retorno);
         while (Ls >= Li) {
             if (area.size() < 2) {
@@ -86,13 +86,13 @@ public class Quick_Sort_Externo {
                     adicionaArea(arquivo.get(Ls), area);
                     Ls--;
                     teste = false;
-                    retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area);
+                    retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area, i, j);
                     saida.add(retorno);
                 } else {
                     adicionaArea(arquivo.get(Li), area);
                     Li++;
                     teste = true;
-                    retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area);
+                    retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area, i, j);
                     saida.add(retorno);
                 }
                 continue;
@@ -101,28 +101,20 @@ public class Quick_Sort_Externo {
                 aux = arquivo.get(Ls);
                 Ls--;
                 teste = false;
-                retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area);
-                saida.add(retorno);
             } else {
                 if (Li == Ei) {
                     aux = arquivo.get(Li);
                     Li++;
                     teste = true;
-                    retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area);
-                    saida.add(retorno);
                 } else {
                     if (teste) {
                         aux = arquivo.get(Ls);
                         Ls--;
                         teste = false;
-                        retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area);
-                        saida.add(retorno);
                     } else {
                         aux = arquivo.get(Li);
                         Li++;
                         teste = true;
-                        retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area);
-                        saida.add(retorno);
                     }
                 }
             }
@@ -131,7 +123,7 @@ public class Quick_Sort_Externo {
                 arquivo.remove(Es);
                 arquivo.add(Es, aux);
                 Es--;
-                retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area);
+                retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area, i, j);
                 saida.add(retorno);
                 continue;
             }
@@ -140,18 +132,20 @@ public class Quick_Sort_Externo {
                 arquivo.remove(Ei);
                 arquivo.add(Ei, aux);
                 Ei++;
-                retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area);
+                retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area, i, j);
                 saida.add(retorno);
                 continue;
             }
             adicionaArea(aux, area);
+            retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area, i, j);
+            saida.add(retorno);
             if (Ei - esq < dir - Es) {
                 arquivo.remove(Ei);
                 arquivo.add(Ei, area.get(0));
                 Ei++;
                 LimInf = area.get(0);
                 area.remove(0);
-                retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area);
+                retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area, i, j);
                 saida.add(retorno);
             } else {
                 arquivo.remove(Es);
@@ -159,7 +153,7 @@ public class Quick_Sort_Externo {
                 Es--;
                 LimSup = area.get(area.size() - 1);
                 area.remove(area.size() - 1);
-                retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area);
+                retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area, i, j);
                 saida.add(retorno);
             }
         }
@@ -173,7 +167,7 @@ public class Quick_Sort_Externo {
         for (int l = 0; l < area.size(); l++) {
             area.remove(l);
         }
-        retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area);
+        retorno = ToString2(LimSup, LimInf, Ei, Es, Ls, Li, area, i, j);
         saida.add(retorno);
     }
 
@@ -188,17 +182,5 @@ public class Quick_Sort_Externo {
                 quickSort(esq, i);
             }
         }
-    }
-    
-    public static void main(String[] args) {
-        Quick_Sort_Externo b = new Quick_Sort_Externo();
-        b.getArquivo().add(4);
-        b.getArquivo().add(2);
-        b.getArquivo().add(1);
-        b.getArquivo().add(7);
-        b.getArquivo().add(6);
-        b.getArquivo().add(5);
-        b.quickSort(0, b.getArquivo().size() - 1);
-        System.out.println(b.getSaida().get(0));
     }
 }

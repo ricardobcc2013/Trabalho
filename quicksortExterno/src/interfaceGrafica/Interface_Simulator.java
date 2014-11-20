@@ -54,6 +54,7 @@ public class Interface_Simulator extends javax.swing.JFrame {
         jTAVariaveis = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Simulador");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -248,13 +249,18 @@ public class Interface_Simulator extends javax.swing.JFrame {
     private void jBAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAvancarActionPerformed
 
         if (c.Itsover()) {
-            JTAArquivo.setText(JTAArquivo.getText() + "\n" + c.tratarSaidaArquivo());
-            jTAMemoria.setText(jTAMemoria.getText() + "\n" + c.tratarSaidaMemoria());
-            jTAVariaveis.setText(jTAVariaveis.getText() + "\n" + c.tratarSaidaVariaveis());
+            if (JTAArquivo.getText().isEmpty()) {
+                JTAArquivo.setText(c.tratarSaidaArquivo());
+                jTAMemoria.setText(c.tratarSaidaMemoria());
+                jTAVariaveis.setText(c.tratarSaidaVariaveis());
+            } else {
+                JTAArquivo.setText(JTAArquivo.getText() + "\n" + c.tratarSaidaArquivo());
+                jTAMemoria.setText(jTAMemoria.getText() + "\n" + c.tratarSaidaMemoria());
+                jTAVariaveis.setText(jTAVariaveis.getText() + "\n" + c.tratarSaidaVariaveis());
+            }
         }
         c.incrementaCont();
     }//GEN-LAST:event_jBAvancarActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea JTAArquivo;
     private javax.swing.JButton jBAvancar;
